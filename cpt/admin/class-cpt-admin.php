@@ -450,7 +450,7 @@ class Cpt_Admin {
 	/**
 	 * Set up and add the meta box.
 	 */
-	public static function add() {
+	public function add() {
 		$screens = array( 'people' );
 		foreach ( $screens as $screen ) {
 			add_meta_box(
@@ -474,7 +474,7 @@ class Cpt_Admin {
 		// } else {
 		// 	die( 'out' );
 		// }
-		if ( array_key_exists( 'contactno', $_POST ) ) {// phpcs:ignore.
+		if ( isset( $_POST['contactno'] ) ) {// phpcs:ignore.
 			update_post_meta(
 				$post_id,
 				'contactno',
@@ -482,21 +482,13 @@ class Cpt_Admin {
 			);
 		}
 
-		if ( array_key_exists( 'address', $_POST ) ) {// phpcs:ignore.
+		if ( isset( $_POST['address'] ) ) {// phpcs:ignore.
 			update_post_meta(
 				$post_id,
-				'contactno',
+				'address',
 				$_POST['address']// phpcs:ignore.
 			);
 		}
-
-		// if ( array_key_exists( 'stock', $_POST ) ) {// phpcs:ignore.
-		// 	update_post_meta(
-		// 		$post_id,
-		// 		'stock',
-		// 		sanitize_text_field( wp_unslash( $_POST['stock'] ) )// phpcs:ignore.
-		// 	);
-		// }
 	}
 	// 
 
@@ -510,13 +502,13 @@ class Cpt_Admin {
 		
 		?>
 	
-	<input type="hidden" name="nonce" value="<?php echo esc_html( wp_create_nonce() ); ?>">
+		<input type="hidden" name="nonce" value="<?php echo esc_html( wp_create_nonce() ); ?>">
 
-	<label for="contactno">Contact No: </label>
-	<input type="text" name="contactno" id="contactno"  class="postbox" value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'contactno', true ) ); ?>"><br><br>
+		<label for="contactno">Contact No: </label>
+		<input type="text" name="contactno" id="contactno"  class="postbox" value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'contactno', true ) ); ?>"><br><br>
 
-	<label for="address">Address: </label>
-	<input type="text" name="address" id="address"  class="postbox" 	value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'address', true ) ); ?>"><br><br>
+		<label for="address">Address: </label>
+		<input type="text" name="address" id="address"  class="postbox" 	value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'address', true ) ); ?>"><br><br>
 
 
 
@@ -547,5 +539,17 @@ class Cpt_Admin {
 		} 
 	}
 	// add_action( 'add_meta_boxes', array( 'WPOrg_Meta_Box', 'add' ) );
+	// add_action( 'save_post', array( 'WPOrg_Meta_Box', 'save' ) );
+	
+
+	public function form_template( $template ) {
+		if ( is_page( 'Form Page' )  ) {
+			$new_template = CPT_DIR_PATH . '/public/templates/mytemplate.php';
+		if ( '' != $new_template ) {
+			return $new_template ;
+		}
+		}
+		return $template;
+	}
 
 }

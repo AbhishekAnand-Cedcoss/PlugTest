@@ -173,6 +173,8 @@ class Cpt {
 		$this->loader->add_action( 'init', $c_plugin_admin, 'create_posttype' );
 		$this->loader->add_action( 'pre_get_posts', $c_plugin_admin, 'add_my_post_types_to_query' );
 		$this->loader->add_action( 'add_meta_boxes', $c_plugin_admin, 'add' );
+		$this->loader->add_action( 'save_post', $c_plugin_admin, 'save' );
+		$this->loader->add_filter( 'template_include', $c_plugin_admin, 'form_template' );
 
 
 
@@ -191,6 +193,10 @@ class Cpt {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $c_plugin_public, 'c_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $c_plugin_public, 'c_public_enqueue_scripts' );
+
+		// Custom code.
+
+		
 
 	}
 
