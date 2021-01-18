@@ -167,17 +167,14 @@ class Cpt {
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $c_plugin_admin, 'c_admin_submenu_page', 15 );
 		$this->loader->add_filter( 'c_general_settings_array', $c_plugin_admin, 'c_admin_general_settings_page', 10 );
 
-		// Custom Code
+		// Custom Code.
 		$this->loader->add_action( 'admin_init', $c_plugin_admin, 'wporg_settings_init' );
 		$this->loader->add_action( 'admin_menu', $c_plugin_admin, 'wporg_options_page' );
 		$this->loader->add_action( 'init', $c_plugin_admin, 'create_posttype' );
 		$this->loader->add_action( 'pre_get_posts', $c_plugin_admin, 'add_my_post_types_to_query' );
 		$this->loader->add_action( 'add_meta_boxes', $c_plugin_admin, 'add' );
 		$this->loader->add_action( 'save_post', $c_plugin_admin, 'save' );
-		$this->loader->add_filter( 'template_include', $c_plugin_admin, 'form_template' );
-
-
-
+		
 	}
 
 	/**
@@ -195,9 +192,9 @@ class Cpt {
 		$this->loader->add_action( 'wp_enqueue_scripts', $c_plugin_public, 'c_public_enqueue_scripts' );
 
 		// Custom code.
-
-		
-
+		$this->loader->add_filter( 'template_include', $c_plugin_public, 'form_template' );
+		$this->loader->add_filter( 'template_include', $c_plugin_public, 'single_template' );
+		$this->loader->add_filter( 'template_include', $c_plugin_public, 'listing_template' );
 	}
 
 

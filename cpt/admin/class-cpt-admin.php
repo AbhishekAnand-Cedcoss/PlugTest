@@ -257,6 +257,11 @@ class Cpt_Admin {
 	}
 	// Custom Code.
 
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
 	public function wporg_settings_init() {
 		// Register a new setting for "wporg" page.
 		register_setting( 'wporg', 'wporg_options' );
@@ -271,7 +276,7 @@ class Cpt_Admin {
 		// Register a new field in the "wporg_section_developers" section, inside the "wporg" page.
 		add_settings_field(
 			'wporg_field_pill_review', // As of WP 4.6 this value is used only internally.
-		// Use $args' label_for to populate the id inside the callback.
+			// Use $args' label_for to populate the id inside the callback.
 				__( 'Review', 'wporg' ),
 			array( $this, 'wporg_field_pill_review' ),
 			'wporg',
@@ -285,7 +290,7 @@ class Cpt_Admin {
 
 		add_settings_field(
 			'wporg_field_pill_rating', // As of WP 4.6 this value is used only internally.
-		// Use $args' label_for to populate the id inside the callback.
+			// Use $args' label_for to populate the id inside the callback.
 				__( 'Rating', 'wporg' ),
 			array( $this, 'wporg_field_pill_rating' ),
 			'wporg',
@@ -301,7 +306,7 @@ class Cpt_Admin {
 	/**
 	 * Register our wporg_settings_init to the admin_init action hook.
 	 */
-	// add_action( 'admin_init', 'wporg_settings_init' );
+	// add_action( 'admin_init', 'wporg_settings_init' );.
 
 
 	/**
@@ -332,18 +337,25 @@ class Cpt_Admin {
 	 * @param array $args
 	 */
 	public function wporg_field_pill_review( $args ) {
-		// Get the value of the setting we've registered with register_setting()
+		// Get the value of the setting we've registered with register_setting().
 		$options = get_option( 'wporg_options' );
 		?>
-		<input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]"> <?php _e('Review'); ?> <br><br>
+		<input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]"  <?php if ( isset( $options['wporg_field_pill_review'] ) ) { echo 'checked'; } ?> > <?php esc_html_e('Review'); ?> <br><br>
 
 		<?php
 	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $args
+	 * @return void
+	 */
 	public function wporg_field_pill_rating( $args ) {
-		// Get the value of the setting we've registered with register_setting()
+		// Get the value of the setting we've registered with register_setting().
 		$options = get_option( 'wporg_options' );
 		?>
-		<input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]"> <?php _e('Rating'); ?> <br><br>
+		<input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]" <?php if( isset( $options['wporg_field_pill_rating'] ) ) { echo 'checked';}?> > <?php esc_html_e( 'Rating' ); ?> <br><br>
 
 		<?php
 	}
@@ -357,7 +369,7 @@ class Cpt_Admin {
 			'Mandatory Fields',
 			'manage_options',
 			'wporg',
-			array( $this, 'wporg_options_page_html' ),
+			array( $this, 'wporg_options_page_html' )
 		);
 	}
 
@@ -365,40 +377,40 @@ class Cpt_Admin {
 	/**
 	 * Register our wporg_options_page to the admin_menu action hook.
 	 */
-	// add_action( 'admin_menu', 'wporg_options_page' );
+	// add_action( 'admin_menu', 'wporg_options_page' );.
 
 
 	/**
 	 * Top level menu callback function
 	 */
 	public function wporg_options_page_html() {
-		// check user capabilities
+		// check user capabilities.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		// add error/update messages
+		// add error/update messages.
 
 		// check if the user have submitted the settings
-		// WordPress will add the "settings-updated" $_GET parameter to the url
+		// WordPress will add the "settings-updated" $_GET parameter to the url.
 		if ( isset( $_GET['settings-updated'] ) ) {
-			// add settings saved message with the class of "updated"
+			// add settings saved message with the class of "updated".
 			add_settings_error( 'wporg_messages', 'wporg_message', __( 'Settings Saved', 'wporg' ), 'updated' );
 		}
 
-		// show error/update messages
+		// show error/update messages.
 		settings_errors( 'wporg_messages' );
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form action="options.php" method="post">
 				<?php
-				// output security fields for the registered setting "wporg"
+				// output security fields for the registered setting "wporg".
 				settings_fields( 'wporg' );
 				// output setting sections and their fields
-				// (sections are registered for "wporg", each field is registered to a specific section)
+				// (sections are registered for "wporg", each field is registered to a specific section).
 				do_settings_sections( 'wporg' );
-				// output save settings button
+				// output save settings button.
 				submit_button( 'Save Settings' );
 				?>
 			</form>
@@ -409,7 +421,7 @@ class Cpt_Admin {
 	/**
 	 * Undocumented function
 	 *
-	 * @return voi$optionsd
+	 * @return void
 	 */
 	public function create_posttype() {
 
@@ -418,9 +430,9 @@ class Cpt_Admin {
 			// CPT Options.
 			array(
 				'labels'        => array(
-				'name'          => __( 'Peoples' ),
-				'singular_name' => __( 'People' ),
-			),
+					'name'          => __( 'Peoples' ),
+					'singular_name' => __( 'People' ),
+				),
 				'public'       => true,
 				'has_archive'  => true,
 				'rewrite'      => array( 'slug' => 'people' ),
@@ -431,7 +443,7 @@ class Cpt_Admin {
 		);
 	}
 	// Hooking up our function to theme setup.
-	// add_action( 'init', 'create_posttype' );
+	// add_action( 'init', 'create_posttype' ); .
 
 	/**
 	 * Undocumented function
@@ -445,7 +457,7 @@ class Cpt_Admin {
 			return $query;
 		}
 	}
-	// add_action( 'pre_get_posts', 'add_my_post_types_to_query' );
+	// add_action( 'pre_get_posts', 'add_my_post_types_to_query' ); .
 
 	/**
 	 * Set up and add the meta box.
@@ -461,7 +473,7 @@ class Cpt_Admin {
 			);
 		}
 	}
-	// 
+
 
 	/**
 	 * Save the meta box selections.
@@ -470,11 +482,11 @@ class Cpt_Admin {
 	 */
 	public function save( int $post_id ) {
 		// if ( wp_verify_nonce( isset( $_POST['nonce'] ) ) ) {
-		// 	die( 'in' );
+		// die( 'in' );
 		// } else {
-		// 	die( 'out' );
-		// }
-		if ( isset( $_POST['contactno'] ) ) {// phpcs:ignore.
+		// die( 'out' );
+		// }.
+		if ( isset( $_POST['contactno'] ) ) {
 			update_post_meta(
 				$post_id,
 				'contactno',
@@ -489,8 +501,24 @@ class Cpt_Admin {
 				$_POST['address']// phpcs:ignore.
 			);
 		}
+
+		if ( isset( $_POST['review'] ) ) {// phpcs:ignore.
+			update_post_meta(
+				$post_id,
+				'review',
+				$_POST['review']// phpcs:ignore.
+			);
+		}
+
+		if ( isset( $_POST['rating'] ) ) {// phpcs:ignore.
+			update_post_meta(
+				$post_id,
+				'rating',
+				$_POST['rating']// phpcs:ignore.
+			);
+		}
 	}
-	// 
+
 
 	/**
 	 * Display the meta box HTML to the user.
@@ -499,57 +527,39 @@ class Cpt_Admin {
 	 */
 	public function html( $post ) {
 		$value = get_post_meta( $post->ID, '_wporg_meta_key', true );
-		
+
 		?>
-	
+
 		<input type="hidden" name="nonce" value="<?php echo esc_html( wp_create_nonce() ); ?>">
 
 		<label for="contactno">Contact No: </label>
 		<input type="text" name="contactno" id="contactno"  class="postbox" value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'contactno', true ) ); ?>"><br><br>
 
 		<label for="address">Address: </label>
-		<input type="text" name="address" id="address"  class="postbox" 	value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'address', true ) ); ?>"><br><br>
-
-
-
-
-
+		<input type="text" name="address" id="address"  class="postbox" value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'address', true ) ); ?>"><br><br>
 
 		<?php
-		$options = get_option('wporg_options');
-		// print_r($options);
-		// die();
-		if ($options['wporg_field_pill_review'] === 'on') {
-		
+		$options = get_option( 'wporg_options' );
+		// print_r($options);.
+		// die();.
+		if ( 'on' === $options['wporg_field_pill_review'] ) {
+
 			?>
 			<label for="review">Review: </label>
 			<input type="text" name="review" id="review"  class="postbox" 	value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'review', true ) ); ?>"><br><br>
-			
-			
+
 			<?php
-			
-			
-		} 
-		if ($options['wporg_field_pill_rating'] === 'on') {
+		}
+		if ( 'on' === $options['wporg_field_pill_rating'] ) {
 			?>
 			<label for="rating">Rating: </label>
 			<input type="text" name="rating" id="rating"  class="postbox" 	value=" <?php echo esc_html( get_post_meta( get_the_ID(), 'rating', true ) ); ?>"><br><br>
 			<?php
-			
-		} 
+
+		}
 	}
 	// add_action( 'add_meta_boxes', array( 'WPOrg_Meta_Box', 'add' ) );
-	// add_action( 'save_post', array( 'WPOrg_Meta_Box', 'save' ) );
-	
+	// add_action( 'save_post', array( 'WPOrg_Meta_Box', 'save' ) );.
 
-	public function form_template( $template ) {
-		if ( is_page( 'Form Page' )  ) {
-			$new_template = CPT_DIR_PATH . '/public/templates/mytemplate.php';
-		if ( '' != $new_template ) {
-			return $new_template ;
-		}
-		}
-		return $template;
-	}
 
 }

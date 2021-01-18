@@ -78,4 +78,51 @@ class Cpt_Public {
 
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $template contain string.
+	 * @return string.
+	 */
+	public function form_template( $template ) {
+		if ( is_page( 'Form Page' ) ) {
+			$new_template = CPT_DIR_PATH . '/public/templates/mytemplate.php';
+			if ( '' !== $new_template ) {
+				return $new_template;
+			}
+		}
+		return $template;
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $template contain string.
+	 * @return string
+	 */
+	public function single_template( $template ) {
+		if ( is_singular( 'people' ) ) {
+			$new_template = CPT_DIR_PATH . '/public/templates/singletemplate.php';
+			if ( '' !== $new_template ) {
+				return $new_template;
+			}
+		}
+		return $template;
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $template contain string.
+	 * @return string
+	 */
+	public function listing_template( $template ) {
+		if ( is_page( 'People List' ) ) {
+			$new_template = CPT_DIR_PATH . '/public/templates/listingtemplate.php';
+			if ( '' !== $new_template ) {
+				return $new_template;
+			}
+		}
+		return $template;
+	}
+
+
 }
